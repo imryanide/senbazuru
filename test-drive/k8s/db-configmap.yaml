@@ -1,7 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: db-configmap
+  name: app-config
 data:
-  init.sql: |
-  
+  DB_HOST: "postgres"              
+  DB_PORT: "5432"
+  DB_USER: "admin"
+  DB_PASSWORD: "password"
+  DB_NAME: "appdb"
+
+
+

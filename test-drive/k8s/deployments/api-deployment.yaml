@@ -17,14 +17,29 @@ spec:
         image: test-drive-backend:latest
         env:
         - name: DB_HOST
-          value: postgres_service
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_HOST
         - name: DB_PORT
-          value: "5432"
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_PORT
         - name: DB_USER
-          value: admin
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_USER
         - name: DB_PASSWORD
-          value: password
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_PASSWORD
         - name: DB_NAME
-          value: appdb
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_NAME
         ports:
         - containerPort: 8082
