@@ -9,7 +9,11 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/mux"
+	_ "github.com/gorilla/mux"
 	_ "github.com/lib/pq"
+	"github.com/rs/cors"
+	_ "github.com/rs/cors"
 )
 
 type Message struct {
@@ -33,7 +37,54 @@ func connectDB() {
 	if err != nil {
 		log.Fatal("Failed to ping database:", err)
 	}
+	initializeMessages()
 	fmt.Println("Connected to the database!")
+}
+
+func initializeMessages() error {
+	// Check if messages already exist
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM messages").Scan(&count)
+	if err != nil {
+		return err
+	}
+
+	// If no messages, insert initial messages
+	if count == 0 {
+		messages := []string{
+			"Hello, world!",
+			"Welcome to our API!",
+			"This is a sample message.",
+			"Go is great for building APIs.",
+			"React is a fantastic frontend library.",
+			"Docker simplifies containerization.",
+			"Kubernetes is awesome for orchestration.",
+			"PostgreSQL is a powerful database.",
+			"Let's build something amazing!",
+			"Keep calm and code on.",
+			"Error handling is important.",
+			"Always test your code.",
+			"Documentation is key to great software.",
+			"Version control saves lives.",
+			"Code reviews help improve quality.",
+			"Clean code is easy to read.",
+			"Comments should explain why, not what.",
+			"Refactor early and often.",
+			"Stay curious and keep learning.",
+			"Community contributes to growth.",
+			"Collaboration leads to success.",
+		}
+
+		for _, msg := range messages {
+			_, err := db.Exec("INSERT INTO messages (content) VALUES ($1)", msg)
+			if err != nil {
+				return err
+			}
+		}
+		fmt.Println("Initialized messages")
+	}
+
+	return nil
 }
 
 func getMessageHandler(w http.ResponseWriter, r *http.Request) {
@@ -58,8 +109,11 @@ func getMessageHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	connectDB()
+	router := mux.NewRouter()
+	router.HandleFunc("/api/messages", getMessageHandler).Methods("GET")
 
-	http.HandleFunc("/api/messages", getMessageHandler)
-	fmt.Println("Backend running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	handler := cors.Default().Handler(router)
+
+	fmt.Println("Backend running on port 8082")
+	log.Fatal(http.ListenAndServe(":8082", handler))
 }

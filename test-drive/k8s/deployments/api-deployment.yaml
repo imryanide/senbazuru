@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: test-drive-backend
+        image: test-drive-backend:latest
+        env:
+        - name: DB_HOST
+          value: postgres_service
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          value: admin
+        - name: DB_PASSWORD
+          value: password
+        - name: DB_NAME
+          value: appdb
+        ports:
+        - containerPort: 8082

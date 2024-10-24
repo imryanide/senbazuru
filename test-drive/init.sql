@@ -4,4 +4,3 @@ CREATE TABLE IF NOT EXISTS messages (
     content TEXT NOT NULL
 );
 
-INSERT INTO messages (content) VALUES ('Hello from PostgreSQL!');

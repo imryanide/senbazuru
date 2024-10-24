@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: appdb
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./api
+    container_name: go-backend
+    environment:
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_USER: admin
+      DB_PASSWORD: password
+      DB_NAME: appdb
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./frontend
+    container_name: react-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
