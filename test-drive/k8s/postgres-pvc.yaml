@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-recycler
+  namespace: default
+spec:
+  restartPolicy: Never
+  volumes:
+  - name: vol
+    hostPath:
+      path: /var/postgres/data

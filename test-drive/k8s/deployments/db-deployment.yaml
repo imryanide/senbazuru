@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: postgres
-        image: postgres
+        image: postgres:13
         env:
         - name: POSTGRES_USER
           value: admin
@@ -24,9 +24,9 @@ spec:
         - name: POSTGRES_DB
           value: appdb
         volumeMounts:
-        - name: postgres-init
-          mountPath: /docker-entrypoint-initdb.d
+        - name: postgres-data
+          mountPath: /var/postgres/data
       volumes:
-      - name: postgres-init
+      - name: postgres-data
         configMap:
           name: postgres-init-configmap
