@@ -28,4 +28,4 @@ spec:
       volumes:
       - name: postgres-data
         configMap:
-          name: postgres-init-configmap
+          name: app-config
