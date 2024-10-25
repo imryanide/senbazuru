@@ -42,8 +42,18 @@ func connectDB() {
 }
 
 func initializeMessages() error {
-	// Check if messages already exist
+	createTableQuery := `
+	CREATE TABLE IF NOT EXISTS messages (
+		id SERIAL PRIMARY KEY,
+		content TEXT NOT NULL
+	);`
+	_, erra := db.Exec(createTableQuery)
+	if erra != nil {
+		return fmt.Errorf("failed to create messages table: %v", erra)
+	}
+
 	var count int
+
 	err := db.QueryRow("SELECT COUNT(*) FROM messages").Scan(&count)
 	if err != nil {
 		return err
