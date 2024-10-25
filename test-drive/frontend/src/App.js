@@ -6,8 +6,9 @@ function App() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    fetch("http://backend-service:8082/api/messages")
+    fetch("http://10.244.2.14:8082/api/messages")
       .then(response => response.json())
+      .then()
       .then(data => setMessages(data))
       .catch(err => console.error(err));
   }, []);
