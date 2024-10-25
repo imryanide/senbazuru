@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: test-drive-frontend
-        image: imryanide/test-drive-frontend:latest
+        image: imryanide/test-drive-frontend:v2
         ports:
         - containerPort: 3000
