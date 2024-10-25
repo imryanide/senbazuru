@@ -6,7 +6,7 @@ function App() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8082/api/messages")
+    fetch("http://backend-service:8082/api/messages")
       .then(response => response.json())
       .then(data => setMessages(data))
       .catch(err => console.error(err));
