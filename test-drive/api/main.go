@@ -122,7 +122,14 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/api/messages", getMessageHandler).Methods("GET")
 
-	handler := cors.Default().Handler(router)
+	corsOptions := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+	})
+
+	handler := corsOptions.Handler(router)
 
 	fmt.Println("Backend running on port 8082")
 	log.Fatal(http.ListenAndServe(":8082", handler))

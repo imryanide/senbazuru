@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: test-drive-backend
-        image: imryanide/test-drive-backend:v2
+        image: imryanide/test-drive-backend:v3
         env:
         - name: DB_HOST
           valueFrom:
