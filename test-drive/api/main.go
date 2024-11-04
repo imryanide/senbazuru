@@ -59,12 +59,11 @@ func initializeMessages() error {
 		return err
 	}
 
-	// If no messages, insert initial messages
 	if count == 0 {
 		messages := []string{
-			"Hello, world!",
-			"Welcome to our API!",
-			"This is a sample message.",
+			"Hello, dude!",
+			"Welcome to our new API!",
+			"This is me testing out deployments and stuff.",
 			"Go is great for building APIs.",
 			"React is a fantastic frontend library.",
 			"Docker simplifies containerization.",
